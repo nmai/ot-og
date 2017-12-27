@@ -45,9 +45,11 @@ describe('client', () => {
 
   it ('Delete action', () => {
     let del1at1 = createDeleteAction(1, 1)
+
     console.log(del1at1)
-    // let del2at6 = new DeleteAction(6, 2)
-    // let del8at8 = new DeleteAction(8, 8)
+
+    let del2at6 = createDeleteAction(6, 2)
+    let del8at8 = createDeleteAction(8, 8)
 
     sm.store.dispatch(del1at1)
     expect(sm.store.getState().text).to.equal('2345678')
