@@ -1,6 +1,6 @@
 'use strict'
 
-let expect = require('chai').expect
+import { expect } from 'chai'
 
 let Core = require('./lib/core').Core
 
@@ -23,7 +23,25 @@ import {
   createDeleteAction
 } from './actions'
 
-describe('client', () => {
+describe('[Core] Action Creators (Operations)', () => {
+
+  it('InsertAction', () => {
+
+    expect(createInsertAction(0, '')).to.equal
+  })
+
+  it ('Operations have types', () => {
+    let base = new BaseOp(),
+        del = new DeleteOp(),
+        write = new WriteOp()
+
+    expect(base.type).to.equal('BaseOp')
+    expect(del.type).to.equal('DeleteOp')
+    expect(write.type).to.equal('WriteOp')
+  })
+})
+
+describe('[Core] Operating on a live Store', () => {
   let sm: StoreManager
 
   beforeEach(() => {
@@ -33,17 +51,7 @@ describe('client', () => {
     })
   })
 
-  it ('operations have types', () => {
-    let base = new BaseOp(),
-        del = new DeleteOp(),
-        write = new WriteOp()
-
-    expect(base.type).to.equal('BaseOp')
-    expect(del.type).to.equal('DeleteOp')
-    expect(write.type).to.equal('WriteOp')
-  })
-
-  describe ('[Operation: Delete]', () => {
+  describe ('[Operation] Delete', () => {
 
     it ('remove first character', () => {
       sm.store.dispatch(createDeleteAction(1, 1))
@@ -62,49 +70,49 @@ describe('client', () => {
 
   })
 
-  it ('Delete operation', () => {
-    let x = '12345678'
+  describe ('[Operation] Insert', () => {
 
-    let del1at1 = new DeleteOp(1, 1)
-    let del2at6 = new DeleteOp(6, 2)
-    let del8at8 = new DeleteOp(8, 8)
+    it ('insert one character at beginning', () => {
+      sm.store.dispatch(createInsertAction(0, '*'))
+      expect(sm.store.getState().text).to.equal('*12345678')
+    })
 
-    expect(del1at1.applyTransform(x)).to.equal('2345678')
-    expect(del2at6.applyTransform(x)).to.equal('123478')
-    expect(del8at8.applyTransform(x)).to.equal('')
+    it ('insert two characters in middle', () => {
+      sm.store.dispatch(createInsertAction(4, '**'))
+      expect(sm.store.getState().text).to.equal('1234**5678')
+    })
+
+    it ('insert three characters at end', () => {
+      sm.store.dispatch(createInsertAction(8, '***'))
+      expect(sm.store.getState().text).to.equal('12345678***')
+    })
+
   })
 
-  it ('Write operation', () => {
-    let x = '1234'
+  describe ('Chaining', () => {
+    it ('6x insert/delete operations consecutively', () => {
 
-    let write1at1 = new WriteOp(1, '*')
-    let write2at4 = new WriteOp(4, '**')
-    let write4at4 = new WriteOp(4, '****')
+    })
+    it ('deprecated', () => {
+      let x = '0000'
+      let textProcessor = new TextProcessor(x)
+      
+      let write1at1 = new WriteOp(1, '*')
+      let write2at4 = new WriteOp(4, '**')
+      let write4at4 = new WriteOp(4, '****')
+      let del1at1 = new DeleteOp(1, 1)
+      let del2at6 = new DeleteOp(6, 2)
+      let del3at5 = new DeleteOp(5, 3)
 
-    expect(write1at1.applyTransform(x)).to.equal('1*234')
-    expect(write2at4.applyTransform(x)).to.equal('1234**')
-    expect(write4at4.applyTransform(x)).to.equal('1234****')
-  })
-
-  it ('Text Operations', () => {
-    let x = '0000'
-    let textProcessor = new TextProcessor(x)
-    
-    let write1at1 = new WriteOp(1, '*')
-    let write2at4 = new WriteOp(4, '**')
-    let write4at4 = new WriteOp(4, '****')
-    let del1at1 = new DeleteOp(1, 1)
-    let del2at6 = new DeleteOp(6, 2)
-    let del3at5 = new DeleteOp(5, 3)
-
-    textProcessor.apply(write1at1) ;console.log(textProcessor.snapshot) // 0*000
-    textProcessor.apply(del1at1) ;console.log(textProcessor.snapshot) // *000
-    textProcessor.apply(write2at4) ;console.log(textProcessor.snapshot) // *000**
-    textProcessor.apply(del2at6) ;console.log(textProcessor.snapshot) // *000
-    textProcessor.apply(write4at4) ;console.log(textProcessor.snapshot) // *000****
-    textProcessor.apply(del3at5) ;console.log(textProcessor.snapshot) // *0***
-    
-    expect(textProcessor.snapshot).to.equal('*0***')
+      textProcessor.apply(write1at1) ;console.log(textProcessor.snapshot) // 0*000
+      textProcessor.apply(del1at1) ;console.log(textProcessor.snapshot) // *000
+      textProcessor.apply(write2at4) ;console.log(textProcessor.snapshot) // *000**
+      textProcessor.apply(del2at6) ;console.log(textProcessor.snapshot) // *000
+      textProcessor.apply(write4at4) ;console.log(textProcessor.snapshot) // *000****
+      textProcessor.apply(del3at5) ;console.log(textProcessor.snapshot) // *0***
+      
+      expect(textProcessor.snapshot).to.equal('*0***')
+    })
   })
 
   it ('should resolve a conflicting change response', () => {
