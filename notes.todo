@@ -1,0 +1,18 @@
+Goals: just some rough ideas now, will refine as I go along
+- Define an API
+- Implement versioning
+  - All op bundles should be marked with a version number
+- Networking
+  - Core OT/store features should remain abstract and separate from the network code
+  - Initialization
+    - Client sends auth token & requests document
+      - Note: we don't need to handle user auth tokens directly, it should be handled by the host app in middleware or an auth gateway.
+    - Server checks on the document and related permissions, if it is good then a session token with the user ID and document ID serialized in is returned. Document state can be included within the response. If the doc request is empty a new one can be created.
+    - Client adds the data to its store and subscribes to a websocket with the session token in the header. 
+  - Upstream op. bundles
+    - Should be signed with a tentative version and token
+  - Downstream op. bundles
+    - Should be signed with an absolute version, user ID, and document ID
+  - Serverside container requirements:
+    - Hooks for a persistent datastore
+    - Multi-document support

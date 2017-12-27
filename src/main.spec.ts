@@ -105,21 +105,21 @@ describe('[Core] Complex operations on a live Store', () => {
 
   })
 
-  it ('should resolve a conflicting change response', () => {
+  xit ('should resolve a conflicting change response', () => {
     
   })
 
-  it ('should track revision and pending revision', () => {
+  xit ('should track revision and pending revision', () => {
 
   })
 
-  it ('should send a message with a properly formatted operation', () => {
+  xit ('should send a message with a properly formatted operation', () => {
 
   })
 
 
   // optional
-  it ('should aggregate a list of pending operations before sending', () => {
+  xit ('should aggregate a list of pending operations before sending', () => {
 
   })
 })
