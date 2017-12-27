@@ -65,7 +65,7 @@
     "testEnvironment": "node",
     "testURL": "http://localhost",
     "transform": {
-      "^.+\\.tsx?$": "ts-jest",
+      "^.+\\.tsx?$": "<rootDir>/config/jest/typescriptTransform.js",
       "^.+\\.css$": "<rootDir>/config/jest/cssTransform.js",
       "^(?!.*\\.(js|jsx|css|json)$)": "<rootDir>/config/jest/fileTransform.js"
     },
@@ -85,8 +85,8 @@
       "web.tsx",
       "tsx",
       "web.js",
-      ".d.ts",
       "js",
+      "d.tsx",
       "web.jsx",
       "jsx",
       "json",

@@ -17,7 +17,7 @@ export function createInsertAction(index: number, text: string): InsertAction {
 
 export function createDeleteAction(index: number, delta: number): DeleteAction {
   return {
-    type: INSERT,
+    type: DELETE,
     index: index,
     delta: delta
   }

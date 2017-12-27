@@ -43,22 +43,23 @@ describe('client', () => {
     expect(write.type).to.equal('WriteOp')
   })
 
-  it ('Delete action', () => {
-    let del1at1 = createDeleteAction(1, 1)
+  describe ('[Operation: Delete]', () => {
 
-    console.log(del1at1)
+    it ('remove first character', () => {
+      sm.store.dispatch(createDeleteAction(1, 1))
+      expect(sm.store.getState().text).to.equal('2345678')
+    })
 
-    let del2at6 = createDeleteAction(6, 2)
-    let del8at8 = createDeleteAction(8, 8)
+    it ('remove two characters from middle', () => {
+      sm.store.dispatch(createDeleteAction(6, 2))
+      expect(sm.store.getState().text).to.equal('123478')
+    })
 
-    sm.store.dispatch(del1at1)
-    expect(sm.store.getState().text).to.equal('2345678')
+    it ('remove all characters', () => {
+      sm.store.dispatch(createDeleteAction(8, 8))
+      expect(sm.store.getState().text).to.equal('')
+    })
 
-    // sm.store.dispatch(del2at6)
-    // expect(sm.store.getState().text).to.equal('123478')
-
-    // sm.store.dispatch(del8at8)
-    // expect(sm.store.getState().text).to.equal('')
   })
 
   it ('Delete operation', () => {
