@@ -1,6 +1,5 @@
 import { StoreState } from '../interfaces/store-state'
-import { INSERT, DELETE, OTAction } from '../interfaces/actions'
-
+import { INSERT, DELETE, OTAction } from '../interfaces/actions.d'
 
 // @TODO: take time dimension into account
 

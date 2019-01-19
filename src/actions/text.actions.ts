@@ -5,7 +5,7 @@
 import {
   InsertAction, INSERT,
   DeleteAction, DELETE
-} from '../interfaces/actions'
+} from '../interfaces/actions.d'
 
 export function createInsertAction(index: number, text: string): InsertAction {
   return {
