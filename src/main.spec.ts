@@ -5,15 +5,6 @@ import { StoreManager } from './store-manager'
 import { DeleteOp } from './ops/delete-op'
 import { InsertOp } from './ops/insert-op'
 import { OpLog } from './oplog'
-// import {
-//   new InsertOp,
-//   createDeleteAction,
-// } from './actions'
-// import {
-//   InsertAction, INSERT,
-//   DeleteAction, DELETE
-// } from './interfaces/actions.d'  // gahhh ts/jest is so annoying
-
 
 describe('[Store] Atomic operations on a live Store', () => {
   let sm: StoreManager

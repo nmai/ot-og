@@ -1,4 +1,4 @@
-# lucid-core-rx
+# OG OT
 collaborative data management
 
 ### Usage
@@ -11,13 +11,6 @@ The objective is to make it easier to create a collaborative app- we will focus 
 
 Redux is being used to manage state. Not sure how to handle persistent/semi-persistent data, or even whether this library should handle that aspect at all. Will look at couchdb/pouchdb.
 
-### todo
-
-### brainstorm
-name.. unspool
-any data set modified over time can be represented with the log
-
-application.. Don't Sink
 
 ### dev log updates...
 12:40pm Jan 19 2019- 
