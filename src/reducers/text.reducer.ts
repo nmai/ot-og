@@ -1,16 +1,16 @@
 import { StoreState } from '../interfaces/store-state'
-import { INSERT, DELETE, OTAction } from '../interfaces/actions.d'
+import { Op } from '../interfaces/op.d'
 
 // @TODO: take time dimension into account
 
-export function textReducer(state: StoreState, action: OTAction): StoreState {
+export function textReducer(state: StoreState, op: Op): StoreState {
   let newStateShallow = {...state}
-  switch (action.type) {
-    case INSERT:
-      newStateShallow.text = insertFragment(newStateShallow.text, action.text, action.index)
+  switch (op.type) {
+    case 'INSERT':
+      newStateShallow.text = insertFragment(newStateShallow.text, op.text, op.index)
       return newStateShallow
-    case DELETE:
-      newStateShallow.text = deleteFragment(newStateShallow.text, action.delta, action.index)
+    case 'DELETE':
+      newStateShallow.text = deleteFragment(newStateShallow.text, op.delta, op.index)
       return newStateShallow
     default:
       // we don't know how to handle this action type... for now we do nothing
