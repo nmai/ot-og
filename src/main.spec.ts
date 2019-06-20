@@ -88,22 +88,22 @@ describe('[OpLog]', () => {
   beforeEach(() => {
     // this should construct "c123d"
     ol = new OpLog(new Map([
-      [1551835549845, {
+      [10, {
         type: 'INSERT',
         index: 0,
-        timestamp: 1551835549845,
+        timestamp: 10,
         text: 'abcd'
       }],
-      [1551835869551, {
+      [20, {
         type: 'DELETE',
         index: 2,
-        timestamp: 1551835869551,
+        timestamp: 20,
         delta: 2
       }],
-      [1551835879731, {
+      [30, {
         type: 'INSERT',
         index: 1,
-        timestamp: 1551835879731,
+        timestamp: 30,
         text: '123'
       }],
     ]))
@@ -113,28 +113,22 @@ describe('[OpLog]', () => {
     ol.apply({
       type: 'INSERT',
       index: 5,
-      timestamp: 1551836441721,
+      timestamp: 40,
       text: '**'
     })
 
-    expect(Array.from(ol.log.keys()).indexOf(1551836441721)).to.equal(3)
+    expect(Array.from(ol.log.keys()).indexOf(40)).to.equal(3)
   })
 
+  // this should fail - 
+  it('should insert an earlier change and make conflict adjustments', () => {
+    ol.apply({
+      type: 'INSERT',
+      index: 5,
+      timestamp: 25,
+      text: '**'
+    })
 
-  xit ('should resolve a conflicting change response', () => {
-  })
-
-  xit ('should track revision and pending revision', () => {
-
-  })
-
-  xit ('should send a message with a properly formatted operation', () => {
-
-  })
-
-
-  // optional
-  xit ('should aggregate a list of pending operations before sending', () => {
-
+    expect(Array.from(ol.log.keys()).indexOf(25)).to.equal(3)
   })
 })
