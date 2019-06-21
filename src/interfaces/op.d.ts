@@ -1,7 +1,7 @@
 export interface Op {
-  readonly type: string
+  timestamp: number
+  type: string
   index: number
-  timestamp: number 
   delta?: number
   text?: string
 }

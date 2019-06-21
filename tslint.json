@@ -54,13 +54,6 @@
         "no-trailing-whitespace": false,
         "no-unused-expression": false,
         "no-use-before-declare": true,
-        "one-line": [
-            true,
-            "check-catch",
-            "check-else",
-            "check-open-brace",
-            "check-whitespace"
-        ],
         "quotemark": [true, "single", "jsx-double"],
         "radix": true,
         "semicolon": [false, "always"],
