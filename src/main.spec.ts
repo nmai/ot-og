@@ -1,5 +1,3 @@
-'use strict'
-
 import { expect } from 'chai'
 import { StoreManager } from './store-manager'
 import { DeleteOp } from './ops/delete-op'
@@ -80,55 +78,4 @@ describe('[Store] Complex operations on a live Store', () => {
 
   })
 
-})
-
-describe('[OpLog]', () => {
-  let ol: OpLog
-
-  beforeEach(() => {
-    // this should construct "c123d"
-    ol = new OpLog(new Map([
-      [10, {
-        type: 'INSERT',
-        index: 0,
-        timestamp: 10,
-        text: 'abcd'
-      }],
-      [20, {
-        type: 'DELETE',
-        index: 2,
-        timestamp: 20,
-        delta: 2
-      }],
-      [30, {
-        type: 'INSERT',
-        index: 1,
-        timestamp: 30,
-        text: '123'
-      }],
-    ]))
-  })
-
-  it('should apply a later change to the end of the log', () => {
-    ol.apply({
-      type: 'INSERT',
-      index: 5,
-      timestamp: 40,
-      text: '**'
-    })
-
-    expect(Array.from(ol.log.keys()).indexOf(40)).to.equal(3)
-  })
-
-  // this should fail - 
-  xit('should insert an earlier change and make conflict adjustments', () => {
-    ol.apply({
-      type: 'INSERT',
-      index: 5,
-      timestamp: 25,
-      text: '**'
-    })
-
-    expect(Array.from(ol.log.keys()).indexOf(25)).to.equal(3)
-  })
 })

@@ -1,18 +1,24 @@
 import { Op } from './interfaces/op'
+import { TimeList } from './time-list'
+import { rebuildOp } from './util/rebuild-op'
 
 export class OpLog {
-  // @todo - remember that this strategy fails if two operations are submitted at the same millisecond
-
-  // @todo - it's exposed (public) for more granular testing, but is it necessary?
-  public log: Map<number, Op>
-
-  constructor(log?: Map<number, Op>) {
-    this.log = log || new Map()
-  }
+  _tl: TimeList
 
   // 
   public apply(op: Op): Op | void {
-    this.log.set(op.timestamp, op)
+    let index = this._tl.findInsertionPoint(op.timestamp)
+
+    if (index == this._tl.length) {
+      this._tl.pushOp(op)
+      console.log(this._tl.length)
+    } else {
+      let bundle = this._tl.fetchOps(index)
+      let reverseOp = rebuildOp(op, bundle)
+      this._tl.spliceOps(index, [op, ...bundle])
+
+      return reverseOp
+    }
   }
 
 }
