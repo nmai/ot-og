@@ -27,21 +27,21 @@ describe('[TimeList]', () => {
     ])
   })
 
-  describe ('[Operation] Delete', () => {
+  describe ('find insertion points', () => {
 
-    it ('remove first character', () => {
-      sm.store.dispatch(new DeleteOp(1, 1).toOp())
-      expect(sm.store.getState().text).to.equal('2345678')
+    it ('last index', () => {
+      let i = tl.findInsertionPoint(40)
+      expect(i).to.equal(3)
     })
 
-    it ('remove two characters from middle', () => {
-      sm.store.dispatch(new DeleteOp(6, 2).toOp())
-      expect(sm.store.getState().text).to.equal('123478')
+    it ('mid index', () => {
+      let i = tl.findInsertionPoint(15)
+      expect(i).to.equal(1)
     })
 
-    it ('remove all characters', () => {
-      sm.store.dispatch(new DeleteOp(8, 8).toOp())
-      expect(sm.store.getState().text).to.equal('')
+    it ('0th index', () => {
+      let i = tl.findInsertionPoint(5)
+      expect(i).to.equal(0)
     })
 
   })
