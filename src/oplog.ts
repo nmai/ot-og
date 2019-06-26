@@ -11,7 +11,6 @@ export class OpLog {
 
     if (index == this._tl.length) {
       this._tl.pushOp(op)
-      console.log(this._tl.length)
     } else {
       let bundle = this._tl.fetchOps(index)
       let reverseOp = rebuildOp(op, bundle)

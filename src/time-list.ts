@@ -1,4 +1,4 @@
-import { Op } from "./interfaces"
+import { Op } from "./interfaces/op"
 
 export class TimeList {
   _list: Array<Op>

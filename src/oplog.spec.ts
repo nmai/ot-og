@@ -1,5 +1,5 @@
 import { expect } from 'chai'
-import { Op } from './interfaces/op.d'
+import { Op } from './interfaces/op'
 import { OpLog } from './oplog'
 import { TimeList } from './time-list'
 
