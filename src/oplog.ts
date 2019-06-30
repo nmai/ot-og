@@ -1,6 +1,6 @@
 import { Op } from './interfaces/op'
 import { TimeList } from './time-list'
-import { rebuildOp } from './util/rebuild-op'
+import { invertOp } from './util/invert-op'
 
 export class OpLog {
   _tl: TimeList
@@ -13,10 +13,10 @@ export class OpLog {
       this._tl.pushOp(op)
     } else {
       let bundle = this._tl.fetchOps(index)
-      let reverseOp = rebuildOp(op, bundle)
+      let invertedOp = invertOp(op, bundle)
       this._tl.spliceOps(index, [op, ...bundle])
 
-      return reverseOp
+      return invertedOp
     }
   }
 

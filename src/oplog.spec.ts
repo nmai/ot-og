@@ -15,7 +15,7 @@ describe('[OpLog]', () => {
         type: 'INSERT',
         index: 0,
         text: 'abcd'
-      },
+      }, 
       {
         timestamp: 20,
         type: 'DELETE',
@@ -47,15 +47,36 @@ describe('[OpLog]', () => {
     })
   })
 
-  // this should fail - 
-  xit('should insert an earlier change and make conflict adjustments', () => {
+  it('should insert an earlier change at correct time slot', () => {
     ol.apply({
       type: 'INSERT',
-      index: 5,
+      index: 2,
       timestamp: 25,
       text: '**'
     })
 
-    expect(Array.from(ol.log.keys()).indexOf(25)).to.equal(3)
+    expect(ol._tl._list[2].timestamp).to.equal(25)
+  })
+
+  it('conflicting change should yield inverted op (depth 1)', () => {
+    let inverted = ol.apply({
+      type: 'INSERT',
+      index: 2,
+      timestamp: 25,
+      text: '**'
+    })
+
+    expect(inverted.index).to.equal(5)
+  })
+
+  it('conflicting change should yield inverted op (depth 2)', () => {
+    let inverted = ol.apply({
+      type: 'INSERT',
+      index: 2,
+      timestamp: 15,
+      text: '**'
+    })
+
+    expect(inverted.index).to.equal(0)
   })
 })
